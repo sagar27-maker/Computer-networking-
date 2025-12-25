@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int n, d[20][20], v[20][20];
+
+void dvr()
+{
+    int i, j, k;
+    for (i = 0; i < n; i++)
+        for (j = 0; j < n; j++)
+            for (k = 0; k < n; k++)
+                if (d[i][k] + d[k][j] < d[i][j])
+                    d[i][j] = d[i][k] + d[k][j], v[i][j] = k;
+
+    for (i = 0; i < n; i++)
+    {
+        printf("\nState value for router %d is\n", i + 1);
+        for (j = 0; j < n; j++)
+            printf("node %d via %d Distance%d\n", j + 1, v[i][j] + 1, d[i][j]);
+    }
+}
+
+int main()
+{
+    int i, j, x;
+    printf("Enter the number of nodes : ");
+    scanf("%d", &n);
+
+    printf("Enter the distance matrix :\n");
+    for (i = 0; i < n; i++)
+        for (j = 0; j < n; j++)
+            scanf("%d", &d[i][j]), v[i][j] = j;
+
+    dvr();
+
+    printf("enter value of i & j:\n");
+    scanf("%d%d", &i, &j);
+    printf("enter the new cost\n");
+    scanf("%d", &x);
+
+    d[i][j] = x;
+    printf("After update\n");
+    dvr();
+
+    return 0;
+}
